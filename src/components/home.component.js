@@ -7,16 +7,19 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      content: ""
+      content: []
     };
   }
 
   componentDidMount() {
-    UserService.getPublicContent().then(
+    UserService.getUserBoard("/dashboard/get").then(
       response => {
         this.setState({
-          content: response.data
+          content: response.data,
+         
         });
+        console.log(1)
+        console.log(response.data)
       },
       error => {
         this.setState({
@@ -25,17 +28,25 @@ export default class Home extends Component {
             error.message ||
             error.toString()
         });
+        console.log(2)
+        console.log(this.state.content)
       }
     );
   }
 
   render() {
     return (
-      <div className="container">
-        <header className="jumbotron">
-          <h3>{this.state.content}</h3>
-        </header>
+      <div>
+      {this.state.content.map((item) => (
+      <div key={item.topicId}>
+        <h5>{item.topicName}</h5>
+       
+        <p>{item.totalMessages}</p>
+        <p>Last modification date: {item.timeOfLastMessage}</p>
       </div>
+      ))}
+      
+    </div>
     );
   }
 }
