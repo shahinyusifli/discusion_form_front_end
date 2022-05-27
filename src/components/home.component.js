@@ -18,7 +18,7 @@ export default class Home extends Component {
           content: response.data,
          
         });
-        console.log(1)
+        
         console.log(response.data)
       },
       error => {
@@ -28,8 +28,6 @@ export default class Home extends Component {
             error.message ||
             error.toString()
         });
-        console.log(2)
-        console.log(this.state.content)
       }
     );
   }
