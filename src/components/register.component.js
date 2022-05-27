@@ -46,6 +46,16 @@ const vpassword = value => {
   }
 };
 
+const vrole = value => {
+  if (value !== "admin" && value !== "user") {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The role must be user or admin.
+      </div>
+    );
+  }
+};
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -53,11 +63,13 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeRole = this.onChangeRole.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
+      role : "",
       successful: false,
       message: ""
     };
@@ -80,7 +92,11 @@ export default class Register extends Component {
       password: e.target.value
     });
   }
-
+  onChangeRole(e) {
+    this.setState({
+      role: e.target.value
+    });
+  }
   handleRegister(e) {
     e.preventDefault();
 
@@ -95,7 +111,8 @@ export default class Register extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        this.state.role
       ).then(
         response => {
           this.setState({
@@ -159,6 +176,18 @@ export default class Register extends Component {
                     value={this.state.email}
                     onChange={this.onChangeEmail}
                     validations={[required, email]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="role">Role</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="role"
+                    value={this.state.role}
+                    onChange={this.onChangeRole}
+                    validations={[required, vrole]}
                   />
                 </div>
 
