@@ -8,6 +8,7 @@ import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
+import Logout from "./components/logout.component";
 
 
 
@@ -70,6 +71,8 @@ class App extends Component {
             <Route exact path="/register" element={<Register/>} >
             </Route>
             
+            <Route exact path="/logout" element={<Logout/>} >
+            </Route>
 
 
           </Routes>
