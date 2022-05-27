@@ -9,6 +9,7 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Logout from "./components/logout.component";
+import TopicGet from "./components/Topic/TopicGet/TopicGet";
 
 
 
@@ -72,6 +73,9 @@ class App extends Component {
             </Route>
             
             <Route exact path="/logout" element={<Logout/>} >
+            </Route>
+
+            <Route exact path="/topic/get" element={<TopicGet/>} >
             </Route>
 
 
