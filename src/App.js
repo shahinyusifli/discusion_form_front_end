@@ -9,7 +9,7 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Logout from "./components/logout.component";
-import TopicGet from "./components/Topic/TopicGet/TopicGet";
+import TopicGet from "./components/Topic/TopicGet";
 
 
 
