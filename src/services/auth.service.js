@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/user/";
 
+
 class AuthService {
   login(username, password) {
     return axios
@@ -30,6 +31,12 @@ class AuthService {
       role
     });
   }
+
+  //topicPost(topicName) {
+    //return axios.post(ROOT_API_URL + "/topic/post", {
+      //topicName
+    //});
+  //}
 
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));;

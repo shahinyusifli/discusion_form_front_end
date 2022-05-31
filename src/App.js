@@ -10,6 +10,8 @@ import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Logout from "./components/logout.component";
 import TopicGet from "./components/Topic/TopicGet";
+import TopicPost from "./components/Topic/TopicPost";
+import TopicGetName from "./components/Topic/TopicGetNames";
 
 
 
@@ -76,6 +78,12 @@ class App extends Component {
             </Route>
 
             <Route exact path="/topic/get" element={<TopicGet/>} >
+            </Route>
+
+            <Route exact path="/topic/post" element={<TopicPost/>} >
+            </Route>
+            
+            <Route exact path="/topic/get/name" element={<TopicGetName/>} >
             </Route>
 
 
