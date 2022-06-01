@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-
 import UserService from "../services/user.service";
+import { Card } from "react-bootstrap";
+
+
 
 export default class Home extends Component {
   constructor(props) {
@@ -9,6 +11,8 @@ export default class Home extends Component {
     this.state = {
       content: []
     };
+
+
   }
 
   componentDidMount() {
@@ -16,9 +20,9 @@ export default class Home extends Component {
       response => {
         this.setState({
           content: response.data,
-         
+
         });
-        
+
         console.log(response.data)
       },
       error => {
@@ -35,16 +39,27 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-      {this.state.content.map((item) => (
-      <div key={item.topicId}>
-        <h5>{item.topicName}</h5>
-       
-        <p>{item.totalMessages}</p>
-        <p>Last modification date: {item.timeOfLastMessage}</p>
+        {this.state.content.map((item) => (
+
+          <div key={item.topicId}>
+            <Card>
+              <Card.Header>{item.topicName}</Card.Header>
+              <Card.Body>
+                <Card.Title>There are {item.totalMessages} messages under this topic</Card.Title>
+                <Card.Text>
+                  {item.timeOfLastMessage} is the last modification date of message in {item.topicName} topic
+                </Card.Text>
+
+              </Card.Body>
+            </Card>
+          </div>
+
+
+        ))}
+
+
+
       </div>
-      ))}
-      
-    </div>
     );
   }
 }

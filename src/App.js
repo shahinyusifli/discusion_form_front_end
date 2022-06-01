@@ -12,6 +12,7 @@ import Logout from "./components/logout.component";
 import TopicGet from "./components/Topic/TopicGet";
 import TopicPost from "./components/Topic/TopicPost";
 import TopicGetName from "./components/Topic/TopicGetNames";
+import DashboardGet from "./components/Dashboard/DashboardGet";
 
 
 
@@ -86,6 +87,8 @@ class App extends Component {
             <Route exact path="/topic/get/name" element={<TopicGetName/>} >
             </Route>
 
+            <Route exact path="/dashboard/get" element={<DashboardGet/>} >
+            </Route>
 
           </Routes>
         </div>
