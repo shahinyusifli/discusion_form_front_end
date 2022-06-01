@@ -5,7 +5,7 @@ const ROOT_API_URL = "http://localhost:5000";
 
 
 
-const ResquestService = () => {
+const RequestService = () => {
           const topicPost = (topicName) => {
                     return axios.post(ROOT_API_URL + "/topic/post", {
                       topicName
@@ -13,4 +13,4 @@ const ResquestService = () => {
                   }
 };
 
-export default ResquestService;
+export default RequestService;
