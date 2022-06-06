@@ -11,8 +11,8 @@ import Home from "./components/home.component";
 import Logout from "./components/logout.component";
 import TopicGet from "./components/Topic/TopicGet";
 import TopicPost from "./components/Topic/TopicPost";
-import TopicGetName from "./components/Topic/TopicGetNames";
-import DashboardGet from "./components/Dashboard/DashboardGet";
+import ParseJwt from "./services/parse_jwt";
+import TopicCRUDTable from "./components/Topic/TopicCRUDTable";
 
 
 
@@ -84,11 +84,15 @@ class App extends Component {
             <Route exact path="/topic/post" element={<TopicPost/>} >
             </Route>
             
-            <Route exact path="/topic/get/name" element={<TopicGetName/>} >
+            <Route exact path="/jwt" element={<ParseJwt/>} >
             </Route>
 
-            <Route exact path="/dashboard/get" element={<DashboardGet/>} >
+            <Route exact path="/crud" element={<TopicCRUDTable/>} >
             </Route>
+
+            
+
+           
 
           </Routes>
         </div>
