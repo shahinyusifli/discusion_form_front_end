@@ -170,22 +170,7 @@ function App() {
     
   }
 
-  const handleRowDelete = (oldData, resolve) => {
-    
-    api.delete("/users/"+oldData.id, { headers: authHeader() })
-      .then(res => {
-        const dataDelete = [...data];
-        const index = oldData.tableData.messageId;
-        dataDelete.splice(index, 1);
-        setData([...dataDelete]);
-        resolve()
-      })
-      .catch(error => {
-        setErrorMessages(["Delete failed! Server error"])
-        setIserror(true)
-        resolve()
-      })
-  }
+  
 
 
   return (
@@ -221,10 +206,7 @@ function App() {
                       new Promise((resolve) => {
                         handleRowAdd(newData, resolve)
                       }),
-                    onRowDelete: (oldData) =>
-                      new Promise((resolve) => {
-                        handleRowDelete(oldData, resolve)
-                      }),
+                    
                   }}
             />
           </Grid>
