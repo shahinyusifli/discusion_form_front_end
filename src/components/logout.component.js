@@ -7,10 +7,10 @@ import Button from '@mui/material/Button';
 
 const Logout = () => {
           
-          const history = useNavigate();
+          const navigate = useNavigate();
           const handleClick = () => {
                     authService.logout()
-                    history('/login');
+                    navigate("/login");
           }
         
           return (

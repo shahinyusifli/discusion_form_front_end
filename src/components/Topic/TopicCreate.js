@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UserService from '../../services/user.service';
 import { useState } from 'react';
-
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 function Copyright(props) {
@@ -29,13 +29,14 @@ function Copyright(props) {
 const theme = createTheme();
 
 
-export default function SignIn() {
-
+export default function TopicCreate() {
+  const navigate = useNavigate();
   const [topicContent, setTopic] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
     
     UserService.postTopic('/topic/post', topicContent)
+    navigate("/dashboard")
   };
 
   return (

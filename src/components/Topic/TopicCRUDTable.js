@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { forwardRef } from 'react';
 import Avatar from 'react-avatar';
 import Grid from '@material-ui/core/Grid'
-
 import MaterialTable from "material-table";
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -24,6 +24,9 @@ import axios from 'axios'
 import Alert from '@material-ui/lab/Alert';
 import authHeader from '../../services/auth-header';
 import CardHeader from 'material-ui/Card/CardHeader';
+
+import authGetUserRole from '../../services/get-user-role';
+import authGetUserName from '../../services/get-user-name';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -49,12 +52,9 @@ const api = axios.create({
   baseURL: ''
 })
 
-const token = localStorage.getItem('user')
-const base64Url = token.split('.')[1];
-const base64 = base64Url.replace('-', '+').replace('_', '/');
-const parsed_jwt = JSON.parse(window.atob(base64))
-const name =  parsed_jwt['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']
-const role =  parsed_jwt["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+
+const name =  authGetUserName();
+const role =  authGetUserRole();
 const current = new Date();
 const date = current
 const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
@@ -67,6 +67,7 @@ function validateEmail(email){
 }
 
 function App() {
+  
 
   var columns = [
     {title: "id", field: "messageId", editable: false},
@@ -124,8 +125,10 @@ function App() {
         setIserror(true)
         resolve()
         
-      })
-    }else{
+      }) 
+      
+    } 
+    else{
       setErrorMessages(errorList)
       setIserror(true)
       resolve()
@@ -161,6 +164,7 @@ function App() {
         setIserror(true)
         resolve()
       })
+      
     }else{
       setErrorMessages(errorList)
       setIserror(true)
@@ -168,6 +172,9 @@ function App() {
     }
 
     
+
+  
+  
   }
 
   

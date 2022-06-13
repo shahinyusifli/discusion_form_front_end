@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import authHeader from "../services/auth-header";
 import axios from "axios";
 import authGetUserRole from "../services/get-user-role";
+import authFindUser from "../services/auth-find-user";
+import ReactPaginate from "react-paginate";
 
 export default class Home extends Component {
   constructor(props) {
@@ -14,9 +16,13 @@ export default class Home extends Component {
 
     this.state = {
       content: [],
-      status : '',
-      topicContent : '',
-      role : authGetUserRole()
+      status: '',
+      topicContent: '',
+      role: authGetUserRole(),
+      userExist: authFindUser(),
+      offset: 0,
+      perPage: 5,
+      currentPage: 0
     };
 
 
@@ -25,42 +31,46 @@ export default class Home extends Component {
   }
 
   handleRowUpdate = (value, item) => {
-    
+
     let errorList = []
     const api = axios.create({
       baseURL: ''
     })
-    
-    
-    if(value === undefined){
+
+
+    if (value === undefined) {
       errorList.push("Please add topic contnent")
     }
 
-    if(this.state.role != 'admin'){
+    if (this.state.role != 'admin') {
       errorList.push("Modifing topics are required to admin role")
     }
 
-    
 
-    if(errorList.length < 1){
-      api.put("/dashboard/update/"+item.topicId, {topicContent:value, topicId:item.topicId}, { headers: authHeader() })
-      .then(response => {
 
-        this.setState({
-          topicContent: response.data,
-        });
-        
-      })
-      
+    if (errorList.length < 1) {
+      api.put("/dashboard/update/" + item.topicId, { topicContent: value, topicId: item.topicId }, { headers: authHeader() })
+        .then(response => {
+
+          this.setState({
+            topicContent: response.data,
+          });
+
+        })
+
     }
-    
+
   }
 
   componentDidMount() {
     UserService.getUserBoard("/dashboard/get").then(
       response => {
+
+        const data = response.data;
+        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
         this.setState({
-          content: response.data,
+          content: slice,
+          pageCount: Math.ceil(data.length / this.state.perPage),
         });
 
 
@@ -74,11 +84,20 @@ export default class Home extends Component {
         });
       }
     );
-
-
-
-
   }
+
+  handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    const offset = selectedPage * this.state.perPage;
+
+    this.setState({
+        currentPage: selectedPage,
+        offset: offset
+    }, () => {
+        this.componentDidMount()
+    });
+
+};
 
   checkTopics(value) {
     for (const i in this.state.topic_has_message) {
@@ -88,29 +107,31 @@ export default class Home extends Component {
   }
 
   render() {
-    console.log(this.state)
+    const { page, perPage, pages } = this.state;
+    
     return (
       <div>
+
         {this.state.content.map((item) => (
           <div key={item.topicId}>
             <Card>
               {
-                item.timeOfLastMessage && 
+                item.timeOfLastMessage &&
                 <Card.Header>
-                {item.topicContent}
-              </Card.Header>
+                  {item.topicContent}
+                </Card.Header>
               }
-              
+
               {item.timeOfLastMessage ||
-              
+
                 <EdiText
-                className="text-center"
+                  className="text-center"
                   type='text'
                   value={item.topicContent}
                   onSave={(value) => this.handleRowUpdate(value, item)}
                 />}
-              
-                
+
+
               <Card.Body>
                 <Card.Title>There are {item.totalMessages} messages under this topic</Card.Title>
                 {
@@ -121,8 +142,22 @@ export default class Home extends Component {
           </div>
         ))}
 
+        <div className="pagination-txt">Display {5} of {20} relevant
+          jobs
+        </div>
 
-
+        <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
       </div>
     );
   }

@@ -4,17 +4,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
-
+import Navbar from "./components/MenuNavBar";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Logout from "./components/logout.component";
-import TopicGet from "./components/Topic/TopicGet";
-import TopicPost from "./components/Topic/TopicPost";
-import ParseJwt from "./services/parse_jwt";
 import TopicCRUDTable from "./components/Topic/TopicCRUDTable";
+import TopicCreate from "./components/Topic/TopicCreate";
 
-
+import authFindUser from "./services/auth-find-user";
 
 
 // import AuthVerify from "./common/auth-verify";
@@ -29,6 +27,7 @@ class App extends Component {
       showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
+      user : authFindUser(),
     };
   }
 
@@ -55,20 +54,24 @@ class App extends Component {
         
 
         <div className="container mt-3">
-          
-
-
 
           <Router>
       <div className="App">
+        <Navbar/>
       
         <div className="content">
           <Routes>
           
-            
-            <Route exact path="/" element={<Home/>} >
+          <Route exact path="/dashboard" element={<Home/>} >
             </Route>
+            
+            <Route exact path="/dashbaord/post" element={<TopicCreate/>} >
+            </Route>
+            
 
+            {/* <Route exact path="/dashbaord/post" element={<TopicCreate/>} > */ }
+            {/* </Route> */ }
+            
             <Route exact path="/login" element={<Login/>} >
             </Route>
 
@@ -77,21 +80,12 @@ class App extends Component {
             
             <Route exact path="/logout" element={<Logout/>} >
             </Route>
-
-            <Route exact path="/topic/get" element={<TopicGet/>} >
-            </Route>
-
-            <Route exact path="/topic/post" element={<TopicPost/>} >
+            
+            <Route exact path="/topic" element={<TopicCRUDTable/>} >
             </Route>
             
-            <Route exact path="/jwt" element={<ParseJwt/>} >
-            </Route>
-
-            <Route exact path="/crud" element={<TopicCRUDTable/>} >
-            </Route>
 
             
-
            
 
           </Routes>
