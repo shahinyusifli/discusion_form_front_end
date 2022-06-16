@@ -3,10 +3,17 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import CssBaseline from '@mui/material/CssBaseline';
 
-import AuthService from "../services/auth.service";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import AuthService from "../../services/Auth/auth.service";
 
 const required = value => {
+
+  
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
@@ -71,7 +78,8 @@ export default class Register extends Component {
       password: "",
       role : "",
       successful: false,
-      message: ""
+      message: "",
+      theme : createTheme(),
     };
   }
 
@@ -141,11 +149,21 @@ export default class Register extends Component {
     return (
       <div className="col-md-12">
         <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
+          
+         <ThemeProvider theme={this.state.theme}>
+          <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+          >
+<Typography component="h1" variant="h5">
+            Login
+          </Typography>
 
           <Form
             onSubmit={this.handleRegister}
@@ -230,6 +248,12 @@ export default class Register extends Component {
               }}
             />
           </Form>
+          </Box>
+          
+          </Container>
+         </ThemeProvider>
+
+          
         </div>
       </div>
     );

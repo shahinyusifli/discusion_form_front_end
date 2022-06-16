@@ -2,8 +2,21 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import authFindUser from "../../services/Auth/auth-find-user";
+import { Navigate, Route } from "react-router";
 
-import AuthService from "../services/auth.service";
+
+
+import AuthService from "../../services/Auth/auth.service";
 
 const required = value => {
   if (!value) {
@@ -21,14 +34,20 @@ export default class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    
 
     this.state = {
       username: "",
       password: "",
       loading: false,
-      message: ""
+      message: "",
+      theme : createTheme(),
+      logged: false,
+      user : authFindUser(),
     };
   }
+
+ 
 
   onChangeUsername(e) {
     this.setState({
@@ -81,14 +100,24 @@ export default class Login extends Component {
 
   render() {
     return (
+
       <div className="col-md-12">
         <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
+          
+         <ThemeProvider theme={this.state.theme}>
+          <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+          >
+<Typography component="h1" variant="h5">
+            Login
+          </Typography>
           <Form
             onSubmit={this.handleLogin}
             ref={c => {
@@ -145,6 +174,13 @@ export default class Login extends Component {
               }}
             />
           </Form>
+
+            </Box>
+          
+          </Container>
+         </ThemeProvider>
+
+          
         </div>
       </div>
     );

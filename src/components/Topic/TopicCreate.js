@@ -8,9 +8,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import UserService from '../../services/user.service';
+import UserService from '../../services/User/user.service';
 import { useState } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
+import { capitalize } from '@mui/material';
 
 
 function Copyright(props) {
@@ -26,17 +27,36 @@ function Copyright(props) {
   );
 }
 
+const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
+  first.toLocaleUpperCase(locale) + rest.join('')
 const theme = createTheme();
 
+const validationTopic = (value) => {
+  if (value.length < 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        It is uncorret
+      </div>
+    );
+  }
+};
 
 export default function TopicCreate() {
   const navigate = useNavigate();
   const [topicContent, setTopic] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
+    const capitalizedTopic = capitalizeFirstLetter(topicContent)
+    if (capitalizedTopic.length > 20) {
+      navigate("/404")
+    }
+    if (capitalizedTopic.length < 20) {
+      
+    UserService.postTopic('/topic/post', capitalizedTopic)
+   navigate("/dashboard")
+    }
     
-    UserService.postTopic('/topic/post', topicContent)
-    navigate("/dashboard")
+    
   };
 
   return (
@@ -57,8 +77,9 @@ export default function TopicCreate() {
           <Typography component="h1" variant="h5">
             Create new topic
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
+            
               margin="normal"
               required
               fullWidth

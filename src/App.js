@@ -3,17 +3,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AuthService from "./services/auth.service";
+import AuthService from "./services/Auth/auth.service";
 import Navbar from "./components/MenuNavBar";
-import Login from "./components/login.component";
-import Register from "./components/register.component";
-import Home from "./components/home.component";
-import Logout from "./components/logout.component";
+import Login from "./components/User/login.component.js";
+import Register from "./components/User/register.component";
+import Home from "./components/Dashboard/home.component";
+import Logout from "./components/User/logout.component";
 import TopicCRUDTable from "./components/Topic/TopicCRUDTable";
 import TopicCreate from "./components/Topic/TopicCreate";
-
-import authFindUser from "./services/auth-find-user";
-
+import NotFound from "./components/ErrorHandiling/error_404";
+import authFindUser from "./services/Auth/auth-find-user";
+import DashboardGetmessages from "./components/Dashboard/DashboardGetMessages";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -84,10 +84,12 @@ class App extends Component {
             <Route exact path="/topic" element={<TopicCRUDTable/>} >
             </Route>
             
-
+            <Route exact path="/404" element={<NotFound/>} >
+            </Route>
             
-           
-
+            <Route exact path="/dashboard/get/messages/:topicId" element={<DashboardGetmessages/>} >
+            </Route>
+            
           </Routes>
         </div>
       </div>

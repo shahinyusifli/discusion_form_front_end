@@ -22,11 +22,11 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios'
 import Alert from '@material-ui/lab/Alert';
-import authHeader from '../../services/auth-header';
+import authHeader from '../../services/Auth/auth-header';
 import CardHeader from 'material-ui/Card/CardHeader';
 
-import authGetUserRole from '../../services/get-user-role';
-import authGetUserName from '../../services/get-user-name';
+import authGetUserRole from '../../services/User/get-user-role';
+import authGetUserName from '../../services/User/get-user-name';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -87,10 +87,12 @@ function App() {
     api.get("/topic/get", { headers: authHeader() })
         .then(res => {               
             setData(res.data)
+            
          })
          .catch(error=>{
              console.log("Error")
          })
+         
   }, [])
 
   const handleRowUpdate = (newData, oldData, resolve) => {
@@ -119,6 +121,7 @@ function App() {
         resolve()
         setIserror(false)
         setErrorMessages([])
+        window.location.reload();
       })
       .catch(error => {
         setErrorMessages(["Update failed! Server error"])
@@ -158,6 +161,7 @@ function App() {
         resolve()
         setErrorMessages([])
         setIserror(false)
+        window.location.reload();
       })
       .catch(error => {
         setErrorMessages(["Cannot add data. Server error!"])
@@ -181,7 +185,9 @@ function App() {
 
 
   return (
-    <div className="App">
+    
+    <div className="col-md-12">
+        <div className="card card-container">
      <div>
        <h1>Welcome {name}</h1>
        <h2>Your status is {role}</h2>
@@ -201,6 +207,7 @@ function App() {
             <MaterialTable
               title="Topic functionality"
               columns={columns}
+              
               data={data}
               icons={tableIcons}
               editable={{
@@ -219,6 +226,7 @@ function App() {
           </Grid>
           <Grid item xs={3}></Grid>
         </Grid>
+    </div>
     </div>
   );
 }
