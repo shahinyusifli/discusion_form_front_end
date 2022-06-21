@@ -60,7 +60,6 @@ const DashboardEditText = ({ data }) => {
           return (
                     <>
                               <EdiText
-
                                         validation={validationTopic}
                                         className="text-center"
                                         type='text'

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 const capitalizeFirstLetter = ([first, ...rest], locale = navigator.language) =>
   first.toLocaleUpperCase(locale) + rest.join('')
 const theme = createTheme();
@@ -28,7 +29,7 @@ const validationTopic = (value) => {
   }
 };
 
-export default function TopicCreate() {
+export default function TopicCreateComponentForModal() {
   const navigate = useNavigate();
   const [topicContent, setTopic] = useState('');
   const handleSubmit = (event) => {
@@ -40,7 +41,7 @@ export default function TopicCreate() {
     if (capitalizedTopic.length < 20) {
 
       UserService.postTopic('/topic/post', capitalizedTopic)
-      navigate("/dashboard")
+      window.location.reload()
     }
 
 

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { forwardRef } from 'react';
-import Avatar from 'react-avatar';
 import Grid from '@material-ui/core/Grid'
 import MaterialTable from "material-table";
 import AddBox from '@material-ui/icons/AddBox';
@@ -23,8 +20,6 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios'
 import Alert from '@material-ui/lab/Alert';
 import authHeader from '../../services/Auth/auth-header';
-import CardHeader from 'material-ui/Card/CardHeader';
-
 import authGetUserRole from '../../services/User/get-user-role';
 import authGetUserName from '../../services/User/get-user-name';
 
@@ -53,29 +48,29 @@ const api = axios.create({
 })
 
 
-const name =  authGetUserName();
-const role =  authGetUserRole();
+const name = authGetUserName();
+const role = authGetUserRole();
 const current = new Date();
 const date = current
-const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
+const capitalizeFirstLetter = ([first, ...rest], locale = navigator.language) =>
   first.toLocaleUpperCase(locale) + rest.join('')
 
 
-function validateEmail(email){
+function validateEmail(email) {
   const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
   return re.test(String(email).toLowerCase());
 }
 
 function App() {
-  
+
 
   var columns = [
-    {title: "id", field: "messageId", editable: false},
-    {title: "Message name", field: "messageName"},
-    {title: "Message last modififcation date", field: "messageDate", editable: false},
-    {title: "Topic name", field: "topicName"},
-    {title : "User name", field: 'userName', editable: false},
-    {title : "User role", field: 'userRole', editable: false}
+    { title: "id", field: "messageId", editable: false },
+    { title: "Message name", field: "messageName" },
+    { title: "Message last modififcation date", field: "messageDate", editable: false },
+    { title: "Topic name", field: "topicName" },
+    { title: "User name", field: 'userName', editable: false },
+    { title: "User role", field: 'userRole', editable: false }
   ]
   const [data, setData] = useState([]); //table data
 
@@ -83,150 +78,146 @@ function App() {
   const [iserror, setIserror] = useState(false)
   const [errorMessages, setErrorMessages] = useState([])
 
-  useEffect(() => { 
+  useEffect(() => {
     api.get("/topic/get", { headers: authHeader() })
-        .then(res => {               
-            setData(res.data)
-            
-         })
-         .catch(error=>{
-             console.log("Error")
-         })
-         
+      .then(res => {
+        setData(res.data)
+
+      })
+      .catch(error => {
+        setIserror(true)
+      })
+
   }, [])
 
   const handleRowUpdate = (newData, oldData, resolve) => {
     //validation
     let errorList = []
-    
-    
-    if(newData.messageName === ""){
+
+
+    if (newData.messageName === "") {
       errorList.push("Please add message")
     }
 
-    
-    if(newData.userName !== name){
+
+    if (newData.userName !== name) {
       errorList.push("It is not your message")
     }
-    
 
-    if(errorList.length < 1){
-      api.put("/topic/update/"+newData.messageId, {messageContent:newData.messageName, date:date}, { headers: authHeader() })
-      .then(res => {
 
-        const dataUpdate = [...data];
-        const index = oldData.tableData.messageId;
-        dataUpdate[index] = newData;
-        setData([...dataUpdate]);
-        resolve()
-        setIserror(false)
-        setErrorMessages([])
-        window.location.reload();
-      })
-      .catch(error => {
-        setErrorMessages(["Update failed! Server error"])
-        setIserror(true)
-        resolve()
-        
-      }) 
-      
-    } 
-    else{
+    if (errorList.length < 1) {
+      api.put("/topic/update/" + newData.messageId, { messageContent: newData.messageName, date: date }, { headers: authHeader() })
+        .then(res => {
+
+          const dataUpdate = [...data];
+          const index = oldData.tableData.messageId;
+          dataUpdate[index] = newData;
+          setData([...dataUpdate]);
+          resolve()
+          setIserror(false)
+          setErrorMessages([])
+          window.location.reload();
+        })
+        .catch(error => {
+          setErrorMessages(["Update failed! Server error"])
+          setIserror(true)
+          resolve()
+
+        })
+
+    }
+    else {
       setErrorMessages(errorList)
       setIserror(true)
       resolve()
 
     }
-    
+
   }
 
   const handleRowAdd = (newData, resolve) => {
     //validation
     newData.userName = name;
-    newData.topicName =  capitalizeFirstLetter(newData.topicName.toLowerCase())
+    newData.topicName = capitalizeFirstLetter(newData.topicName.toLowerCase())
     let errorList = []
-    if(newData.messageName === undefined){
+
+    if (newData.messageName === undefined) {
       errorList.push("Please enter first name")
     }
-    if(newData.topicName === undefined){
+
+    if (newData.topicName === undefined) {
       errorList.push("Please enter last name")
     }
-    
-    if(errorList.length < 1){ //no error
+
+    if (errorList.length < 1) { //no error
       api.post("/dashbaord/post", newData, { headers: authHeader() })
-      .then(res => {
-        let dataToAdd = [...data];
-        dataToAdd.push(newData);
-        setData(dataToAdd);
-        resolve()
-        setErrorMessages([])
-        setIserror(false)
-        window.location.reload();
-      })
-      .catch(error => {
-        setErrorMessages(["Cannot add data. Server error!"])
-        setIserror(true)
-        resolve()
-      })
-      
-    }else{
+        .then(res => {
+          let dataToAdd = [...data];
+          dataToAdd.push(newData);
+          setData(dataToAdd);
+          resolve()
+          setErrorMessages([])
+          setIserror(false)
+          window.location.reload();
+        })
+        .catch(error => {
+          setErrorMessages(["Cannot add data. Server error!"])
+          setIserror(true)
+          resolve()
+        })
+
+    } else {
       setErrorMessages(errorList)
       setIserror(true)
       resolve()
     }
-
-    
-
-  
-  
   }
 
-  
+
 
 
   return (
-    
+
     <div className="col-md-12">
-        <div className="card card-container">
-     <div>
-       <h1>Welcome {name}</h1>
-       <h2>Your status is {role}</h2>
-      </div>
-      <Grid container spacing={1}>
+      <div className="card card-container">
+        <div>
+          <h1>Welcome {name}</h1>
+          <h2>Your status is {role}</h2>
+        </div>
+        <Grid container spacing={1}>
           <Grid item xs={9}></Grid>
           <Grid item xs={12}>
-          <div>
-            {iserror && 
-              <Alert severity="error">
+            <div>
+              {iserror &&
+                <Alert severity="error">
                   {errorMessages.map((msg, i) => {
-                      return <div key={i}>{msg}</div>
+                    return <div key={i}>{msg}</div>
                   })}
-              </Alert>
-            }       
-          </div>
+                </Alert>
+              }
+            </div>
             <MaterialTable
               title="Topic functionality"
               columns={columns}
-              
               data={data}
               icons={tableIcons}
               editable={{
-                    onRowUpdate: (newData, oldData, ) =>
-                      new Promise((resolve) => {
-                          handleRowUpdate(newData, oldData, resolve);
-                          
-                      }),
-                    onRowAdd: (newData) =>
-                      new Promise((resolve) => {
-                        handleRowAdd(newData, resolve)
-                      }),
-                    
-                  }}
+                onRowUpdate: (newData, oldData,) =>
+                  new Promise((resolve) => {
+                    handleRowUpdate(newData, oldData, resolve);
+
+                  }),
+                onRowAdd: (newData) =>
+                  new Promise((resolve) => {
+                    handleRowAdd(newData, resolve)
+                  }),
+
+              }}
             />
           </Grid>
           <Grid item xs={3}></Grid>
         </Grid>
-    </div>
+      </div>
     </div>
   );
 }

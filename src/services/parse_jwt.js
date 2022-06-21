@@ -10,12 +10,12 @@ const ParseJwt = () => {
           const role = a["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
 
 
-return (
-          <div>
-                    {name}
-                    {role}
-          </div>
-);
-}  
+          return (
+                    <div>
+                              {name}
+                              {role}
+                    </div>
+          );
+}
 
 export default ParseJwt;

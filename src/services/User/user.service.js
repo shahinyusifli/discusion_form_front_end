@@ -13,12 +13,12 @@ class UserService {
   }
 
   postTopic(end_point, payload) {
-    return axios.post(API_URL + end_point, 
-      { topicContent : payload },
-      { headers : authHeader()});
+    return axios.post(API_URL + end_point,
+      { topicContent: payload },
+      { headers: authHeader() });
   }
-  
-  
+
+
 
 }
 

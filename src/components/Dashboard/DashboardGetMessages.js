@@ -1,23 +1,23 @@
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from 'axios';
 import { useState } from 'react';
 import authHeader from '../../services/Auth/auth-header';
-import { Grid } from '@mui/material';
-import { Button, Collapse } from 'react-bootstrap';
-//import Collapse from 'react-bootstrap';
+import moment from 'moment';
+import Typography from '@mui/material/Typography';
 
-const DashboardGetmessages = () => {
+export default function DashboardGetmessages() {
 
-
-    const [messages, setMessages] = useState([])
-    const api = axios.create({
-        baseURL: ''
-    })
-    const navigate = useNavigate()
+    const [messages, setMessages] = useState([]);
+    const api = axios.create({ baseURL: '' });
     const { topicId } = useParams();
-    const [open, setOpen] = useState(false);
-
 
 
     useEffect(() => {
@@ -28,25 +28,43 @@ const DashboardGetmessages = () => {
         console.log('error')
     }, [])
 
-
-
-
     return (
-        <div className="blog-details">
-            {messages.map((item) => (
-            <Grid item key={item.messageId}>
-                {
-                item.messageContent && 
-                <div id="example-collapse-text">
-                  <h3>{item.messageContent}</h3>
-                  <h3>{item.dateOfMessage}</h3>
-                </div>
-                }
-            </Grid>
-            )
-            )}
-        </div>
-    )
-};
+        <>
+            <br />
+            <Typography variant="h5" gutterBottom component="div" align='left'>
+                Topic contnent:
+                {messages.length > 0 && messages[0].topicContent}
 
-export default DashboardGetmessages;
+            </Typography>
+            <br />
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>ID</TableCell>
+                            <TableCell align="right">Messages</TableCell>
+                            <TableCell align="right">Last modification date</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {messages.map((row) => (
+                            <TableRow
+                                key={row.messageId}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {row.messageId}
+                                </TableCell>
+                                <TableCell align="right">{row.messageContent}</TableCell>
+                                <TableCell align="right"> {moment(row.timeOfLastMessage).format('LLL')}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+
+        </>
+
+    );
+}

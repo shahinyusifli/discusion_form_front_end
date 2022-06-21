@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import UserService from "../../services/User/user.service";
-import Button from '@mui/material/Button';
 import authHeader from "../../services/Auth/auth-header";
 import axios from "axios";
 import authGetUserRole from "../../services/User/get-user-role";
 import authFindUser from "../../services/Auth/auth-find-user";
-import { Link } from 'react-router-dom';
 import DashboardCard from "./DashboardCard";
-import DashboardEditText from "./DashboardEditText";
-
 import ReactPaginate from "react-paginate";
-
+import Pagination from 'react-bootstrap/Pagination';
+import DashboardCreateTopicModal from "./DashboardTopicCreateModal";
 
 export default class Home extends Component {
 
@@ -33,7 +30,7 @@ export default class Home extends Component {
     };
   }
 
-  
+
 
   handleDelete = (value, item) => {
     const api = this.state.api
@@ -49,7 +46,7 @@ export default class Home extends Component {
     if (value.length < 20) {
       return (
         <div className="alert alert-danger" role="alert">
-          The password must be between 6 and 40 characters.
+          The topic must be less than 20 characters.
         </div>
       );
     }
@@ -84,13 +81,13 @@ export default class Home extends Component {
     const offset = selectedPage * this.state.perPage;
 
     this.setState({
-        currentPage: selectedPage,
-        offset: offset
+      currentPage: selectedPage,
+      offset: offset
     }, () => {
-        this.componentDidMount()
+      this.componentDidMount()
     });
 
-};
+  };
 
   checkTopics(value) {
     for (const i in this.state.topic_has_message) {
@@ -101,30 +98,35 @@ export default class Home extends Component {
 
   render() {
     const { page, perPage, pages } = this.state;
-   return(
+    return (
 
-    <>
-    {this.state.content.map((data) => (
-      <DashboardCard data={data}/>
-    ))}
+      <>
+        <br />
+        <DashboardCreateTopicModal />
+        <DashboardCard data={this.state.content} />
 
 
-<ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}/>
-    </>
 
-    
 
-   );
+        <Pagination>
+          <ReactPaginate
+            previousLabel={"prev"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"} />
+        </Pagination>
+
+      </>
+
+
+
+    );
   }
 }

@@ -1,91 +1,68 @@
-import { Box, Container, Grid, Pagination, CardContent, Avatar, Typography, Divider } from '@mui/material';
-import DashboardEditText from './DashboardEditText';
+import { Container, Grid, CardContent, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import Badge from 'material-ui/Badge';
 import MailIcon from '@mui/icons-material/Mail';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CssBaseline from '@mui/material/CssBaseline';
+import Stack from '@mui/material/Stack';
+import moment from 'moment';
+import { CardActionArea, CardActions } from '@mui/material';
+import Badge from '@mui/material/Badge';
+import DashboardUpdateTopicModal from './DashboardUpdateTopicModal';
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 
 const DashboardCard = ({ data }) => {
 
+      const theme = createTheme();
 
-
-          return (
-                    <Grid container spacing={2} columns={16}>
-                                                  <Grid item xs={4}>
-                                                       <MuiThemeProvider>
-                              
-                              <CardContent>
-                                        
-
-                                        <Typography
-                                                  align="center"
-                                                  color="textPrimary"
-                                                  gutterBottom
-                                                  variant="h5"
-                                        >
-                                                  {data.topicContent}
-                                        </Typography>
-
-                                        <Typography
-                                                  align="center"
-                                                  color="textPrimary"
-                                                  variant="body1"
-                                        >
-                                                  {data.timeOfLastMessage}
-                                        </Typography>
-                              </CardContent>
-
-                              <Box sx={{ flexGrow: 1 }} />
-
-                              <Divider />
-                              <Box sx={{ p: 2 }}>
-                                        <Grid
-                                                  container
-                                                  spacing={2}
-                                                  sx={{ justifyContent: 'space-between' }}
-                                        >
-                                                  <Grid
-
-                                                            sx={{
-                                                                      alignItems: 'center',
-                                                                      display: 'flex'
-                                                            }}
-                                                  >
-
-
-                                                            <Badge badgeContent={data.totalMessages} color="primary">
-                                                                      <MailIcon color="action" />
-
-                                                            </Badge>
-
-                                                  </Grid>
-                                                  <Grid
-                                                            item
-                                                            sx={{
-                                                                      alignItems: 'center',
-                                                                      display: 'flex'
-                                                            }}
-                                                  >
-                                                            <DashboardEditText data={data} />
-                                                            <Typography
-                                                                      color="textSecondary"
-                                                                      display="inline"
-                                                                      sx={{ pl: 1 }}
-                                                                      variant="body2"
-                                                            >
-                                                            </Typography>
-                                                  </Grid>
-                                        </Grid>
-                              </Box>
-                                                        </MuiThemeProvider>
-     
-                                                  </Grid>
-                                        </Grid>
-                    
-
-          )
-
+      return (
+            <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  <main>
+                        <Container sx={{ py: 8 }} maxWidth="md">
+                              <Grid container spacing={4}>
+                                    {data.map((data, index) => (
+                                          <Grid item key={data.topicId} xs={12} sm={6} md={4}>
+                                                <Card sx={{ maxWidth: 345 }}>
+                                                      <CardActionArea>
+                                                            <CardMedia
+                                                                  component="img"
+                                                                  height="140"
+                                                                  image={'https://source.unsplash.com/random?sig=' + index}
+                                                                  alt="random"
+                                                            />
+                                                            <CardContent>
+                                                                  <Typography gutterBottom variant="h5" component="div">
+                                                                        {data.topicContent}
+                                                                  </Typography>
+                                                                  <Typography variant="body2" color="text.secondary">
+                                                                        {data.timeOfLastMessage === null ? "No Update" : "Updated " + moment(data.timeOfLastMessage).startOf('day').fromNow()}
+                                                                  </Typography>
+                                                            </CardContent>
+                                                      </CardActionArea>
+                                                      <CardActions>
+                                                            <Stack spacing={2} direction="row">
+                                                                  {parseInt(data.totalMessages) > 0 ? <Badge badgeContent={parseInt(data.totalMessages)} color="primary">
+                                                                        <Link to={`/dashboard/get/messages/${data.topicId}`}>
+                                                                              <MailIcon color="action" />
+                                                                        </Link>
+                                                                  </Badge> : <Badge badgeContent={parseInt(data.totalMessages)} color="primary">
+                                                                        <MailIcon color="disabled" />
+                                                                  </Badge>}
+                                                                  <DashboardUpdateTopicModal data={data} />
+                                                            </Stack>
+                                                      </CardActions>
+                                                </Card>
+                                                <br />
+                                          </Grid>
+                                    ))}
+                              </Grid>
+                        </Container>
+                  </main>
+            </ThemeProvider>
+      )
 }
 
 export default DashboardCard;
