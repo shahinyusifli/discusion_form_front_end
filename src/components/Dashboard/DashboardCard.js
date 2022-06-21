@@ -34,7 +34,7 @@ const DashboardCard = ({ data }) => {
                                                                   alt="random"
                                                             />
                                                             <CardContent>
-                                                                  <Typography gutterBottom variant="h5" component="div">
+                                                                  <Typography data_testid = "TopicContent" gutterBottom variant="h5" component="div">
                                                                         {data.topicContent}
                                                                   </Typography>
                                                                   <Typography variant="body2" color="text.secondary">
@@ -43,12 +43,12 @@ const DashboardCard = ({ data }) => {
                                                             </CardContent>
                                                       </CardActionArea>
                                                       <CardActions>
-                                                            <Stack spacing={2} direction="row">
+                                                            <Stack data_testid = "TotalMessages" spacing={2} direction="row">
                                                                   {parseInt(data.totalMessages) > 0 ? <Badge badgeContent={parseInt(data.totalMessages)} color="primary">
                                                                         <Link to={`/dashboard/get/messages/${data.topicId}`}>
                                                                               <MailIcon color="action" />
                                                                         </Link>
-                                                                  </Badge> : <Badge badgeContent={parseInt(data.totalMessages)} color="primary">
+                                                                  </Badge> : <Badge  badgeContent={parseInt(data.totalMessages)} color="primary">
                                                                         <MailIcon color="disabled" />
                                                                   </Badge>}
                                                                   <DashboardUpdateTopicModal data={data} />
