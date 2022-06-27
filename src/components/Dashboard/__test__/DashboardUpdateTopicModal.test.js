@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import DashboardUpdateTopicModal from "../Dashboard/DashboardUpdateTopicModal"
+import DashboardUpdateTopicModal from "../DashboardUpdateTopicModal"
 
 
           test('Settings icon should be in DashboardUpdateTopicModal', () => {

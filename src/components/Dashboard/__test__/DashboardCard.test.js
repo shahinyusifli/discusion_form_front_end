@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import DashboardCard from '../Dashboard/DashboardCard';
+import DashboardCard from "../DashboardCard"
 import moment from 'moment';
 import { MemoryRouter } from 'react-router-dom';
 

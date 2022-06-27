@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import UpdateModal from '../Dashboard/UpdateModal';
+import UpdateModal from '../UpdateModal';
 
 
 const test_data = [{}]

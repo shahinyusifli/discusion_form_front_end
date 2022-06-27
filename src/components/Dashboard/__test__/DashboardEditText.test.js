@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import DashboardEditText from '../Dashboard/DashboardEditText'
+import DashboardEditText from '../DashboardEditText'
 
 
 const test_data = [{}]

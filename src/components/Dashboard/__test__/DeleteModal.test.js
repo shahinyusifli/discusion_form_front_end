@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import DeleteModal from '../Dashboard/DeleteModal';
+import DeleteModal from '../DeleteModal';
 
 
 const test_data = [{}]

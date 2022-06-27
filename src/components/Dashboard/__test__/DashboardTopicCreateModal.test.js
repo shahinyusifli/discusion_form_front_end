@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import DashboardCreateTopicModal from "../Dashboard/DashboardTopicCreateModal"
+import DashboardCreateTopicModal from "../DashboardTopicCreateModal"
 
 
 test('Add icon should be shown in DashboardCreateTopicModal', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import DashboardDelete from '../Dashboard/DashboardTopicDelete';
+import DashboardDelete from '../DashboardTopicDelete';
 
 
 const test_data = [{}]
