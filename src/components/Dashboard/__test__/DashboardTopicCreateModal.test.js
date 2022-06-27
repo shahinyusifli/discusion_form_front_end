@@ -10,7 +10,6 @@ test('Add icon should be shown in DashboardCreateTopicModal', () => {
           expect(addIcon).toBeInTheDocument();
 });
 
-
 test("'Create topic' should be in DashboardCreateTopicModel", () => {
 
           render(<DashboardCreateTopicModal />);
