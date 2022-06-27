@@ -85,7 +85,7 @@ export default function TopicCreate() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Create new topic
+              Create topic
             </Button>
 
           </Box>

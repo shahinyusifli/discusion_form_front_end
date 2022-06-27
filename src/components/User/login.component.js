@@ -112,13 +112,14 @@ export default class Login extends Component {
                 }}
               >
                 <Typography component="h1" variant="h5">
-                  Login
+                  User login
                 </Typography>
                 <Form
                   onSubmit={this.handleLogin}
                   ref={c => {
                     this.form = c;
                   }}
+                  aria-label="form"
                 >
                   <div className="form-group">
                     <label htmlFor="username">Username</label>
@@ -148,11 +149,12 @@ export default class Login extends Component {
                     <button
                       className="btn btn-primary btn-block"
                       disabled={this.state.loading}
+                      data-testid="buttonSignin"
                     >
                       {this.state.loading && (
                         <span className="spinner-border spinner-border-sm"></span>
                       )}
-                      <span>Login</span>
+                      <span>Sign in</span>
                     </button>
                   </div>
 

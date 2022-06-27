@@ -61,7 +61,7 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
-function App() {
+function TopicCRUDTable() {
 
 
   var columns = [
@@ -222,4 +222,4 @@ function App() {
   );
 }
 
-export default App;
+export default TopicCRUDTable;

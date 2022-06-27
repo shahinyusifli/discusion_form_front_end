@@ -86,7 +86,7 @@ export default function TopicCreateComponentForModal() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Create new topic
+              Create topic
             </Button>
 
           </Box>

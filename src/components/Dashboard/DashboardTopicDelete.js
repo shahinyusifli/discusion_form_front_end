@@ -15,7 +15,7 @@ const DashboardDelete = ({ data }) => {
           }
 
           return (
-                    <DeleteIcon onClick={() => handleDelete(data)} />
+                    <DeleteIcon data_testid = "DeleteIcon" onClick={() => handleDelete(data)} />
           )
 }
 

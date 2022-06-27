@@ -170,6 +170,7 @@ export default class Register extends Component {
                   ref={c => {
                     this.form = c;
                   }}
+                  aria-label="form"
                 >
                   {!this.state.successful && (
                     <div>

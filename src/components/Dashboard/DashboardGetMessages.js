@@ -25,14 +25,13 @@ export default function DashboardGetmessages() {
             .then(response => {
                 setMessages(response.data)
             })
-        console.log('error')
     }, [])
 
     return (
         <>
             <br />
             <Typography variant="h5" gutterBottom component="div" align='left'>
-                Topic contnent:
+               
                 {messages.length > 0 && messages[0].topicContent}
 
             </Typography>

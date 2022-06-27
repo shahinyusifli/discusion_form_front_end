@@ -32,7 +32,7 @@ export default function DashboardCreateTopicModal() {
   return (
     <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
       {isHovering !== false ? <Typography>You can create topic. Just click</Typography> : <Typography>Create topic</Typography>}
-      <AddCircleOutlineIcon sx={{ fontSize: 50 }} onClick={handleOpen} />
+      <AddCircleOutlineIcon data-testid="addIcon" sx={{ fontSize: 50 }} onClick={handleOpen} />
 
       <Modal
         open={open}
