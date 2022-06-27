@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import DashboardCreateTopicModal from "../DashboardTopicCreateModal"
 
 
@@ -17,6 +17,8 @@ test("'Create topic' should be in DashboardCreateTopicModel", () => {
           const createTopicStatement = screen.getByText(/create topic/i)
           expect(createTopicStatement).toBeInTheDocument();
 });
+
+
 
 
           // test("'You can create topic. Just click' should be in DashboardCreateTopicModel", () => {

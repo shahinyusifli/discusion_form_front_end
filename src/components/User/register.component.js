@@ -183,6 +183,7 @@ export default class Register extends Component {
                           value={this.state.username}
                           onChange={this.onChangeUsername}
                           validations={[required, vusername]}
+                          placeholder="Jhon"
                         />
                       </div>
 
@@ -195,6 +196,7 @@ export default class Register extends Component {
                           value={this.state.email}
                           onChange={this.onChangeEmail}
                           validations={[required, email]}
+                          placeholder="steven92@gmail.com"
                         />
                       </div>
 
@@ -207,6 +209,7 @@ export default class Register extends Component {
                           value={this.state.role}
                           onChange={this.onChangeRole}
                           validations={[required, vrole]}
+                          placeholder="user"
                         />
                       </div>
 
@@ -219,6 +222,7 @@ export default class Register extends Component {
                           value={this.state.password}
                           onChange={this.onChangePassword}
                           validations={[required, vpassword]}
+                          placeholder="*********"
                         />
                       </div>
 

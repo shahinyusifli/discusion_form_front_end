@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Login from '../login.component';
 
 
@@ -51,3 +51,37 @@ test("Form should be in component", () => {
           const formElement = screen.getByRole("form")
           expect(formElement).toBeInTheDocument();
 });
+
+test("Find username input element by place holder", () => {
+          render(<Login />);
+
+          const usernameInputElement = screen.getByPlaceholderText(/jhon/i)
+          expect(usernameInputElement).toBeInTheDocument();
+});
+
+test("Should be able to type into username input", () => {
+          render(<Login />);
+
+          const usernameInputElement = screen.getByPlaceholderText(/jhon/i)
+          fireEvent.change(usernameInputElement, { target: { value: "Shahin" } })
+          expect(usernameInputElement.value).toBe("Shahin");
+
+});
+
+
+test("Find password input element by place holder", () => {
+          render(<Login />);
+
+          const passwordInputElement = screen.getByPlaceholderText("*********")
+          expect(passwordInputElement).toBeInTheDocument();
+});
+
+test("Should be able to type into password input", () => {
+          render(<Login />);
+
+          const passwordInputElement = screen.getByPlaceholderText("*********")
+          fireEvent.change(passwordInputElement, { target: { value: "Shahin1234" } })
+          expect(passwordInputElement.value).toBe("Shahin1234");
+
+});
+

@@ -130,6 +130,7 @@ export default class Login extends Component {
                       value={this.state.username}
                       onChange={this.onChangeUsername}
                       validations={[required]}
+                      placeholder="Jhon"
                     />
                   </div>
 
@@ -142,6 +143,7 @@ export default class Login extends Component {
                       value={this.state.password}
                       onChange={this.onChangePassword}
                       validations={[required]}
+                      placeholder="*********"
                     />
                   </div>
 

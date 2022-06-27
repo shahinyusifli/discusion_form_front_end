@@ -77,6 +77,7 @@ export default function TopicCreate() {
               autoFocus
               onChange={(evt) => setTopic(evt.target.value)}
               value={topicContent}
+              placeholder="Cars"
             />
 
             <Button
