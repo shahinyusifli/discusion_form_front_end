@@ -55,7 +55,7 @@ class App extends Component {
         <div className="container mt-3">
           <Router>
             <div className="App">
-              <Navbar />
+              <Navbar userState={authFindUser()}/>
 
               <div className="content">
                 <Routes>

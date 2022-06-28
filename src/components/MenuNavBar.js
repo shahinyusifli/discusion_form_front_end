@@ -1,4 +1,4 @@
-import authFindUser from "../services/Auth/auth-find-user";
+
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,7 +19,7 @@ import authGetUserRole from "../services/User/get-user-role";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({userState}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -46,7 +46,7 @@ const ResponsiveAppBar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const user = authFindUser()
+  const user = userState
 
   let authPages = [{ pageName: 'Dashboard', link: '/dashboard' }, { pageName: 'New Post', link: '/dashbaord/post' }, { pageName: 'Topic', link: '/topic' }];
   let openPages = [{ pageName: 'Products', link: '' }];
