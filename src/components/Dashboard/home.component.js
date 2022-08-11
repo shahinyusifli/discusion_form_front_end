@@ -8,6 +8,7 @@ import DashboardCard from "./DashboardCard";
 import ReactPaginate from "react-paginate";
 import Pagination from 'react-bootstrap/Pagination';
 import DashboardCreateTopicModal from "./DashboardTopicCreateModal";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export default class Home extends Component {
 
@@ -17,13 +18,12 @@ export default class Home extends Component {
 
     this.state = {
       content: [],
-      status: '',
-      topicContent: '',
       role: authGetUserRole(),
       userExist: authFindUser(),
       offset: 0,
       perPage: 6,
       currentPage: 0,
+      filterStates : 'new',
       api: axios.create({
         baseURL: ''
       })
@@ -52,12 +52,30 @@ export default class Home extends Component {
     }
   };
 
+  checkFilteringStates(value) {
+    if (this.state.filterStates === 'dsc' ) {
+      return value.sort((a, b) => -1 * a.topicContent.localeCompare(b.topicContent));
+      
+    }
+
+    if (this.state.filterStates === 'asc') {
+      return value;
+    }
+
+    if (this.state.filterStates === 'new') {
+      return value.sort(function(a,b){return new Date(b.timeOfLastMessage) - new Date(a.timeOfLastMessage);});;
+    }
+    
+  };
+
   componentDidMount() {
     UserService.getUserBoard("/dashboard/get").then(
       response => {
 
         const data = response.data;
-        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+        
+        const unfiltered_slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+        const slice = this.checkFilteringStates(unfiltered_slice)
         this.setState({
           content: slice,
           pageCount: Math.ceil(data.length / this.state.perPage),
@@ -89,6 +107,69 @@ export default class Home extends Component {
 
   };
 
+  handleFilterAscClick = () => {
+    
+    this.setState({
+      filterStates : 'asc'
+    }, () => {
+      this.componentDidMount()
+    });
+    
+  };
+
+  handleFilterDscClick = () => {
+    
+    this.setState({
+      filterStates : 'dsc'
+    }, () => {
+      this.componentDidMount()
+    });
+    
+  };
+
+  handleFilterNewOneClick = () => {
+    
+    this.setState({
+      filterStates : 'new'
+    }, () => {
+      this.componentDidMount()
+    });
+
+  
+    
+  };
+
+  handleChangePerPageTenClick = () => {
+    
+    this.setState({
+      perPage : 10
+    }, () => {
+      this.componentDidMount()
+    }); 
+  }
+
+  handleChangePerPageFifteenClick = () => {
+    
+    this.setState({
+      perPage : 15
+    }, () => {
+      this.componentDidMount()
+    });
+  
+    
+  };
+
+  handleChangePerPageSixClick = () => {
+    
+    this.setState({
+      perPage : 6
+    }, () => {
+      this.componentDidMount()
+    });
+  
+    
+  };
+
   checkTopics(value) {
     for (const i in this.state.topic_has_message) {
 
@@ -103,10 +184,22 @@ export default class Home extends Component {
       <>
         <br />
         <DashboardCreateTopicModal />
-        <DashboardCard data={this.state.content} />
+        <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Filter
+      </Dropdown.Toggle>
 
-
-
+      <Dropdown.Menu>
+                              <Dropdown.Item onClick={this.handleFilterDscClick}>Sort descending order</Dropdown.Item>
+                              <Dropdown.Item onClick={this.handleFilterAscClick}>Sort ascending order</Dropdown.Item>
+                              <Dropdown.Item onClick={this.handleFilterNewOneClick}>Sorting the newest one</Dropdown.Item>
+                    </Dropdown.Menu>
+    </Dropdown>
+        
+       
+        <DashboardCard data={this.state.content} />  
+        
+        
 
         <Pagination>
           <ReactPaginate
@@ -122,6 +215,17 @@ export default class Home extends Component {
             subContainerClassName={"pages pagination"}
             activeClassName={"active"} />
         </Pagination>
+        <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Topics per page
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item onClick={this.handleChangePerPageSixClick}>6 topics</Dropdown.Item>
+        <Dropdown.Item onClick={this.handleChangePerPageTenClick}>10 topics</Dropdown.Item>
+        <Dropdown.Item onClick={this.handleChangePerPageFifteenClick}>15 topics</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
 
       </>
 

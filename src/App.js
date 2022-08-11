@@ -14,6 +14,7 @@ import TopicCreate from "./components/Topic/TopicCreate";
 import NotFound from "./components/ErrorHandiling/error_404";
 import authFindUser from "./services/Auth/auth-find-user";
 import DashboardGetmessages from "./components/Dashboard/DashboardGetMessages";
+import DashboardFuntionalBased from "./components/Dashboard/home_test_functional";
 
 
 // import AuthVerify from "./common/auth-verify";
@@ -61,7 +62,7 @@ class App extends Component {
                 <Routes>
 
                   {authFindUser() === null ? <Route exact path="/login" element={<Login />} >
-                  </Route> : <Route path="/dashboard/" element={<Home />} >
+                  </Route> : <Route path="/dashboard/" element={<DashboardFuntionalBased />} >
                   </Route>}
 
                   {authFindUser() === null ? <Route exact path="/login" element={<Login />} >

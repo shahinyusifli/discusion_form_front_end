@@ -12,6 +12,10 @@ class UserService {
     return axios.get(API_URL + arg, { headers: authHeader() });
   }
 
+  getTopics(arg) {
+    return axios.get(API_URL + arg, { headers: authHeader() });
+  }
+
   postTopic(end_point, payload) {
     return axios.post(API_URL + end_point,
       { topicContent: payload },

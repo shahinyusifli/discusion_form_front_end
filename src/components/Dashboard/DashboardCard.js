@@ -10,7 +10,7 @@ import moment from 'moment';
 import { CardActionArea, CardActions } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import DashboardUpdateTopicModal from './DashboardUpdateTopicModal';
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 const DashboardCard = ({ data }) => {
