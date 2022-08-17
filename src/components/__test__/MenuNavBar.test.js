@@ -3,73 +3,45 @@ import { MemoryRouter } from 'react-router-dom';
 import ResponsiveAppBar from "../MenuNavBar"
 
 
-test("'Logout' menu item should be in component", () => {
-
+test("'Logout' menu item must be rendered", () => {
           render(<ResponsiveAppBar userState={true}/>,  { wrapper: MemoryRouter });
-          
-
-          const logoutMenu = screen.getByRole('menuitem', {  name: /logout/i})
-          expect(logoutMenu).toBeInTheDocument();
+          expect(screen.getByRole('menuitem', {  name: "Logout"}))
 });
 
 
-test("'Dashboard' menu item should be in component", () => {
-
+test("'Dashboard' menu item must be rendered", () => {
           render(<ResponsiveAppBar userState={true}/>,  { wrapper: MemoryRouter });
-          
-
-          const dashbaordMenu = screen.getByRole('menuitem', {  name: /dashboard/i})
-          expect(dashbaordMenu).toBeInTheDocument();
+          expect(screen.getByRole('menuitem', {  name: "Dashboard"})).toBeInTheDocument();
 });
 
 
-test("'Create topic' menu item should be in component", () => {
-
+test("'Create topic' menu item must be rendered", () => {
           render(<ResponsiveAppBar userState={true}/>,  { wrapper: MemoryRouter });
-          
-
-          const createTopicMenu = screen.getByRole('menuitem', {  name: /create topic/i})
-          expect(createTopicMenu).toBeInTheDocument();
+          expect(screen.getByRole('menuitem', {  name: "Create topic"})).toBeInTheDocument();
 });
 
 
-test("'Topics' menu item should be in component", () => {
-
+test("'Topics' menu item must be rendered", () => {
           render(<ResponsiveAppBar userState={true}/>,  { wrapper: MemoryRouter });
-          
-
-          const topicsMenu = screen.getByRole('menuitem', {  name: /topics/i})
-          expect(topicsMenu).toBeInTheDocument();
+          expect(screen.getByRole('menuitem', {  name: "Topics"})).toBeInTheDocument();
 });
 
 
-test("'Login' menu item should be in component", () => {
-
+test("'Login' menu item must be rendered", () => {
           render(<ResponsiveAppBar userState={null}/>,  { wrapper: MemoryRouter });
-          
-
-          const loginMenu = screen.getByRole('menuitem', {  name: /login/i})
-          expect(loginMenu).toBeInTheDocument();
+          expect(screen.getByRole('menuitem', {  name: "Login"})).toBeInTheDocument();
 });
 
 
-test("'Logo' word should be in component", () => {
-
+test("'Logo' link must be rendered", () => {
           render(<ResponsiveAppBar userState={null}/>,  { wrapper: MemoryRouter });
-          
-
-          const logoMenu = screen.getByRole('link', {  name: /devacademyform/i})
-          expect(logoMenu).toBeInTheDocument();
+          expect(screen.getByRole('link', {  name: "DevAcademyForm"})).toBeInTheDocument();
 });
 
 
-test("'Register' menu item should be in component", () => {
-
+test("'Register' menu item must be rendered", () => {
           render(<ResponsiveAppBar userState={null}/>,  { wrapper: MemoryRouter });
-          
-
-          const registerMenu = screen.getByRole('menuitem', {  name: /register/i})
-          expect(registerMenu).toBeInTheDocument();
+          expect(screen.getByRole('menuitem', {  name: "Register"})).toBeInTheDocument();
 });
 
 

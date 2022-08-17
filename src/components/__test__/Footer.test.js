@@ -3,56 +3,47 @@ import Footer from "../Footer";
 
 
 
-
-test("'DevAcademyForm' word should be in component", () => {
+test("'DevAcademyForm' header must be rendered", () => {
 
           render(<Footer />);
-
-          const academyText = screen.getByText("DevAcademyForm")
-          expect(academyText).toBeInTheDocument();
+          expect(screen.getByRole(
+                    'heading', {name: "DevAcademyForm"
+          })).toBeInTheDocument()
 });
 
 
-test("Long sentance word should be in component", () => {
+test("Long sentance paragraph must be rendered", () => {
+
+         render(<Footer />)
+         expect(screen.getByText("DevAcademyForm is assigment which is created for testing my skils.")).toBeInTheDocument()
+})
+          
+
+test("'Contact' header must be rendered", () => {
 
           render(<Footer />);
-
-          const longacademyText = screen.getByText("DevAcademyForm is assigment which is created for testing my skils.")
-          expect(longacademyText).toBeInTheDocument();
+          expect(screen.getByRole('heading', {
+                    name: "Contact"
+                  })).toBeInTheDocument()
 });
 
 
-test("'Contact' word should be in component", () => {
+test("'shahin.yusifli@solita.fi' paragraph must be rendered", () => {
 
-          render(<Footer />);
-
-          const contactText = screen.getByText(/contact/i)
-          expect(contactText).toBeInTheDocument();
-});
-3
-
-test("'shahin.yusifli@solita.fi' word should be in component", () => {
-
-          render(<Footer />);
-
-          const emailText = screen.getByText(/shahin.yusifli@solita.fi/i)
-          expect(emailText).toBeInTheDocument();
+         render(<Footer />)
+         expect(screen.getByText("shahin.yusifli@solita.fi")).toBeInTheDocument()
 });
 
 
-test("'© 2021 Copyright:' word should be in component", () => {
+test("'© 2021 Copyright:' must be rendered", () => {
 
-          render(<Footer />);
-
-          const copyrightText = screen.getByText(/© 2021 Copyright:/i)
-          expect(copyrightText).toBeInTheDocument();
+          render(<Footer />)
+          expect(screen.getByText("© 2021 Copyright:")).toBeTruthy()
 });
 
 
-test("'Shahin Yusifli' word should be in component", () => {
+test("'Shahin Yusifli' link must be rendered", () => {
 
-          render(<Footer />);
-
-          const nameText = screen.getByText(/Shahin Yusifli/i)
-          expect(nameText).toBeInTheDocument();
+          render(<Footer />)
+          expect(screen.getByRole("link", {name : "Shahin Yusifli"})).toBeInTheDocument()
 });

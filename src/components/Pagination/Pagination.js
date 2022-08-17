@@ -49,8 +49,10 @@ const Pagination = props => {
           disabled: currentPage === 1
         })}
         onClick={onPrevious}
+        
+        
       >
-        <div className="arrow left" />
+        <div className="arrow left" role="previousButton"/>
       </li>
       {paginationRange.map(pageNumber => {
         if (pageNumber === DOTS) {
@@ -63,6 +65,7 @@ const Pagination = props => {
               selected: pageNumber === currentPage
             })}
             onClick={() => onPageChange(pageNumber)}
+            role="pageNumber"
           >
             {pageNumber}
           </li>
@@ -73,6 +76,7 @@ const Pagination = props => {
           disabled: currentPage === lastPage
         })}
         onClick={onNext}
+        role="nextButton"
       >
         <div className="arrow right" />
       </li>
