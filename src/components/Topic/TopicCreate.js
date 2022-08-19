@@ -38,7 +38,6 @@ export default function TopicCreate() {
       navigate("/404")
     }
     if (capitalizedTopic.length < 20) {
-
       UserService.postTopic('/topic/post', capitalizedTopic)
       navigate("/dashboard")
     }
@@ -59,7 +58,6 @@ export default function TopicCreate() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-
           </Avatar>
           <Typography component="h1" variant="h5">
             Create new topic
@@ -88,10 +86,8 @@ export default function TopicCreate() {
             >
               Create topic
             </Button>
-
           </Box>
         </Box>
-
       </Container>
     </ThemeProvider>
   );

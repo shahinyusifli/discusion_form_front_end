@@ -1,30 +1,18 @@
-import React, { Component } from "react";
-import UserService from "../../services/User/user.service";
-import axios from "axios";
-import DashboardCard from "./DashboardCard";
+import React from "react";
+import DashboardCardPage from "./DashboardCard/DashboardCardPage";
 import DashboardCreateTopicModal from "./DashboardTopicCreateModal";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import FilterTopics from "../Filter/FilterTopics";
 import Pagination from "../Pagination/Pagination";
 import PaginationDetermineTopicsPerPage from "../Pagination/PaginationDetermineTopicsPerPage";
+import useDashboardData from "./useDashboardData";
 import './style/DashboardPageStyle.scss'
 
 
-const DashboardFuntionalBased = () => {
+const DashboardPage = () => {
 
- const [content, setContent] = useState([]);
+ 
  const [filterStates, setFilterStates] = useState('new');
- const api = axios.create({baseURL: ''});
- const [currentPage, setCurrentPage] = useState(1);
- const [pageSize, setPageSize] = useState(6)
-
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return content.slice(firstPageIndex, lastPageIndex);
-  }, [pageSize ,content, currentPage, filterStates]);
- 
- 
  const checkFilteringStates = (value) => {
   if (filterStates === 'dsc' ) {
     return value.sort((a, b) => -1 * a.topicContent.localeCompare(b.topicContent));
@@ -32,7 +20,7 @@ const DashboardFuntionalBased = () => {
   }
 
   if (filterStates === 'asc') {
-    return value;
+    return value.sort((a, b) => a.topicContent.localeCompare(b.topicContent));
   }
 
   if (filterStates === 'new') {
@@ -40,25 +28,22 @@ const DashboardFuntionalBased = () => {
   }
   
 };
+ const [currentPage, setCurrentPage] = useState(1);
+ const [pageSize, setPageSize] = useState(6)
+ const content = checkFilteringStates(useDashboardData(filterStates, pageSize))
 
-
- useEffect(() => {
-  UserService.getUserBoard("/dashboard/get").then(
-    response => {
-      setContent(checkFilteringStates(response.data))
-    },
-    error => {setContent(error)}
-  );
- }, [filterStates, pageSize])
-  
-
-
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return content.slice(firstPageIndex, lastPageIndex);
+  }, [pageSize ,content, currentPage]);
+ 
 
   return (
        <>
        <DashboardCreateTopicModal />
        <FilterTopics setFilterStates={setFilterStates}/>
-       <DashboardCard data={currentTableData} />
+       <DashboardCardPage data={currentTableData} />
        <Pagination
         className="pagination-bar"
         currentPage={currentPage}
@@ -74,4 +59,4 @@ const DashboardFuntionalBased = () => {
   )
 }
 
-export default DashboardFuntionalBased;
+export default DashboardPage;

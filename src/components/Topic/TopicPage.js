@@ -18,10 +18,11 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios'
-import Alert from '@material-ui/lab/Alert';
 import authHeader from '../../services/Auth/auth-header';
 import authGetUserRole from '../../services/User/get-user-role';
-import authGetUserName from '../../services/User/get-user-name';
+import authGetUserName from '../../services/User/get-user-name'
+import TopicTableHeader from '../Topic/TopicTable/TopicTableHeader'
+import TopicTabelErrorPage from './TopicTable/Error/TopicTableErrorPage';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -61,7 +62,7 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
-function TopicCRUDTable() {
+function TopicPage() {
 
 
   var columns = [
@@ -180,22 +181,11 @@ function TopicCRUDTable() {
 
     <div className="col-md-12">
       <div className="card card-container">
-        <div>
-          <h1>Welcome {name}</h1>
-          <h2>Your status is {role}</h2>
-        </div>
+        <TopicTableHeader />
         <Grid container spacing={1}>
           <Grid item xs={9}></Grid>
           <Grid item xs={12}>
-            <div>
-              {iserror &&
-                <Alert severity="error">
-                  {errorMessages.map((msg, i) => {
-                    return <div key={i}>{msg}</div>
-                  })}
-                </Alert>
-              }
-            </div>
+          <TopicTabelErrorPage iserror={iserror} errorMessages={errorMessages}/>
             <MaterialTable
               title="Topic functionality"
               columns={columns}
@@ -222,4 +212,4 @@ function TopicCRUDTable() {
   );
 }
 
-export default TopicCRUDTable;
+export default TopicPage;

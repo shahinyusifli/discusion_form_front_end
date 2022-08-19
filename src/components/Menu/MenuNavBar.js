@@ -13,8 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import { Link } from "react-router-dom";
-import authGetUserName from "../services/User/get-user-name";
-import authGetUserRole from "../services/User/get-user-role";
+import authGetUserName from "../../services/User/get-user-name";
+import authGetUserRole from "../../services/User/get-user-role";
 
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -116,7 +116,7 @@ const ResponsiveAppBar = ({userState}) => {
 
             </Menu>
           </Box>
-          <RocketLaunchIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          
           <Typography
             variant="h5"
             noWrap
