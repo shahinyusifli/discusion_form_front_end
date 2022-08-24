@@ -1,7 +1,7 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-const PaginationDetermineTopicsPerPage = props => {
+const PaginationDeterminePerPage = props => {
           const {
                     setPageSize, 
                     pageSize  
@@ -18,4 +18,4 @@ const PaginationDetermineTopicsPerPage = props => {
   );
 }
 
-export default PaginationDetermineTopicsPerPage;
+export default PaginationDeterminePerPage;

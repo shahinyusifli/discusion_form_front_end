@@ -69,5 +69,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-plugin-testing-library": "^5.6.0"
+  }
 }

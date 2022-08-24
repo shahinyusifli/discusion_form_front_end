@@ -1,61 +1,44 @@
 import React from "react";
 import DashboardCardPage from "./DashboardCard/DashboardCardPage";
 import DashboardCreateTopicModal from "./DashboardTopicCreateModal";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import FilterTopics from "../Filter/FilterTopics";
 import Pagination from "../Pagination/Pagination";
-import PaginationDetermineTopicsPerPage from "../Pagination/PaginationDetermineTopicsPerPage";
-import useDashboardData from "./useDashboardData";
+import PaginationDeterminePerPage from "../Pagination/PaginationDeterminePerPage";
+import useDashboardData from "./Data/useDashboardData";
 import './style/DashboardPageStyle.scss'
+import usePaginatedData from "./Data/usePaginatedData";
+
 
 
 const DashboardPage = () => {
 
- 
- const [filterStates, setFilterStates] = useState('new');
- const checkFilteringStates = (value) => {
-  if (filterStates === 'dsc' ) {
-    return value.sort((a, b) => -1 * a.topicContent.localeCompare(b.topicContent));
-    
-  }
 
-  if (filterStates === 'asc') {
-    return value.sort((a, b) => a.topicContent.localeCompare(b.topicContent));
-  }
+  const [filterStates, setFilterStates] = useState('new');
+  const [pageSize, setPageSize] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
+  const paginatedData = usePaginatedData({ filterStates: filterStates, pageSize: pageSize, currentPage: currentPage })
+  const rowData = useDashboardData()
 
-  if (filterStates === 'new') {
-    return value.sort(function(a,b){return new Date(b.timeOfLastMessage) - new Date(a.timeOfLastMessage);});;
-  }
-  
-};
- const [currentPage, setCurrentPage] = useState(1);
- const [pageSize, setPageSize] = useState(6)
- const content = checkFilteringStates(useDashboardData(filterStates, pageSize))
 
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return content.slice(firstPageIndex, lastPageIndex);
-  }, [pageSize ,content, currentPage]);
- 
 
   return (
-       <>
-       <DashboardCreateTopicModal />
-       <FilterTopics setFilterStates={setFilterStates}/>
-       <DashboardCardPage data={currentTableData} />
-       <Pagination
+    <>
+      <DashboardCreateTopicModal />
+      <FilterTopics setFilterStates={setFilterStates} />
+      <DashboardCardPage data={paginatedData} />
+      <Pagination
         className="pagination-bar"
         currentPage={currentPage}
-        totalCount={content.length}
+        totalCount={rowData.length}
         pageSize={pageSize}
         onPageChange={page => setCurrentPage(page)}
       />
-      <PaginationDetermineTopicsPerPage
-      pageSize={pageSize}
-      setPageSize ={setPageSize}
+      <PaginationDeterminePerPage
+        pageSize={pageSize}
+        setPageSize={setPageSize}
       />
-       </>
+    </>
   )
 }
 
